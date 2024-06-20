@@ -3,31 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+    <title>BookLive  - @yield('title') </title>
 </head>
 <body>
 
-    <header class="row">
-
-    @include('includes.header')
-
+    <header>
+        @include('includes.header')
     </header>
     
-    <div id="main" class="row">
+    <section>
+        @yield('content')
+    </section>
 
-    @yield('content')
-
-    </div>
-
-    <footer class="row">
-
-    @include('includes.footer')
-
+    <footer>
+        @include('includes.footer')
     </footer>
 
 </body>
