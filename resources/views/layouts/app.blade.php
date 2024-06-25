@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BookLive  - @yield('title') </title>
+
+
+    @vite('public/src/js/app.js')
+    @vite('public/src/css/reset.css')
+    @vite('public/src/css/style.css')
+
 </head>
 <body>
 

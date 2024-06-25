@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Middleware;
+use Illuminate\Support\Facades\Route;
 
 class UserController extends Controller
 {
@@ -78,8 +79,21 @@ class UserController extends Controller
         Auth::attempt($credentials);
         $request->session()->regenerate();
         return redirect()->route('dashboard')
-            ->withSuccess('Você se cadastrou e logou com sucesso!');
+        ->withSuccess('You have successfully registered & logged in!');
     }
+
+    public function dashboard()
+    {
+        if(Auth::check())
+        {
+            return view('pages.dashboard');
+        }
+        
+        return redirect()->route('login')
+            ->withErrors([
+            'email' => 'Por favor entre em uma conta antes de acessar a página inicial.',
+        ])->onlyInput('email');
+    } 
 
     
 }
