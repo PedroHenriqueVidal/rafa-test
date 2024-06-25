@@ -7,8 +7,6 @@
 
 
     @vite('public/src/js/app.js')
-    @vite('public/src/css/reset.css')
-    @vite('public/src/css/style.css')
 
 </head>
 <body>

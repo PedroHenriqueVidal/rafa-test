@@ -14,7 +14,13 @@
                     <li class="nav-item">
                         <a class="nav-link {{ (request()->is('cadastro')) ? 'active' : '' }}" href="{{ route('register') }}">Cadastrar</a>
                     </li>
-                @else    
+                @else 
+                    <li class="nav-item">
+                        <a class="nav-link {{ (request()->is('lista-livro')) ? 'active' : '' }}" href="{{ route('list-book') }}">Listar livro</a>
+                    </li>   
+                    <li class="nav-item">
+                        <a class="nav-link {{ (request()->is('cadastro-livro')) ? 'active' : '' }}" href="{{ route('register-book') }}">Cadastrar livro</a>
+                    </li>   
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}

@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Route;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class UserController extends Controller
+class UserController extends Controller implements HasMiddleware
 {
 
-    public function __construct()
+    public static function middleware(): array
     {
-        $this->middleware('guest')->except([
-            'logout', 'dashboard'
-        ]);
+        return [
+            new Middleware('guest', except: ['home', 'logout']),
+            new Middleware('auth', only: ['home', 'logout']),
+        ];
     }
 
     public function login()
@@ -25,7 +28,7 @@ class UserController extends Controller
         return view ('auth.login');
     } 
 
-    public function authenticate(Request $request)
+    public function authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
             'email' => 'required|email',
@@ -45,7 +48,7 @@ class UserController extends Controller
 
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
         $request->session()->invalidate();
@@ -61,7 +64,7 @@ class UserController extends Controller
         return view('auth.register');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => 'required|string|max:250',
@@ -79,21 +82,8 @@ class UserController extends Controller
         Auth::attempt($credentials);
         $request->session()->regenerate();
         return redirect()->route('dashboard')
-        ->withSuccess('You have successfully registered & logged in!');
+        ->withSuccess('Você cadastrou e entrou com sucesso!');
     }
-
-    public function dashboard()
-    {
-        if(Auth::check())
-        {
-            return view('pages.dashboard');
-        }
-        
-        return redirect()->route('login')
-            ->withErrors([
-            'email' => 'Por favor entre em uma conta antes de acessar a página inicial.',
-        ])->onlyInput('email');
-    } 
 
     
 }

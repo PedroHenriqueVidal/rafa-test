@@ -7,9 +7,9 @@
     <div class="col-md-8">
 
         <div class="card">
-            <div class="card-header">Cadastrar</div>
             <div class="card-body">
                 <form class="row g-3 container" id="registerForm" action="{{ route('store') }}" method="post">
+                    @csrf()
                     <div class="col-12">
                         <label for="inputName" class="form-label">Nome</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="inputName" name="name" value="{{ old('name') }}" placeholder="Nome">
