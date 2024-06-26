@@ -20,8 +20,8 @@ Route::controller(BookController::class)->group(function(){
     Route::get('cadastro-livro', 'register_book')->name('register-book')->middleware('auth');
     Route::post('guardar-livro', 'store_book')->name('store-book');
     Route::get('lista-livro', 'list_book')->name('list-book')->middleware('auth');
-    Route::get('editar-livro', 'edit_book')->name('edit-book')->middleware('auth');
-    ROute::get('remover-livro', 'remove_book')->name('remove-book');
+    Route::get('editar-livro/{$book}', 'edit_book')->name('edit-book')->middleware('auth');
+    Route::delete('remover/{$book}', 'remove_book')->name('remove-book');
 });
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Book;
@@ -43,14 +44,17 @@ class BookController extends Controller
     }
 
     public function list_book(){
-        return view ('books.book-list');
+        return view ('books.book-list', [
+            'books' => Book::where('user_id', Auth::user()->id)->paginate(15)
+        ]);
     }
 
-    public function edit_book(){
-        return view ('books.edit-book');
+    public function edit_book(Book $book){
+        return view ('books.edit-book', ['book' => $book]);
     }
 
-    public function remove_book(){
-
+    public function remove_book($book){
+            Book::findOrFail($book)->delete();
+            return redirect('/lista-livro')->with('msg', 'Livro removido com sucesso!');
     }
 }
